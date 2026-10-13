@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Niko Polistico — Full Stack Developer (Mobile, Web, Desktop)</title>
+    <meta
+      name="description"
+      content="Portfolio of Niko Polistico, a Full Stack Developer in Butuan City, Philippines building mobile, web, and desktop applications."
+    />
+    <meta name="theme-color" content="#0a1020" />
+    <!-- TODO: set real URLs and add public/og.png (1200x630) before deploying -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Niko Polistico — Full Stack Developer" />
+    <meta
+      property="og:description"
+      content="Mobile, web, and desktop applications, built from database to interface."
+    />
+    <meta property="og:image" content="/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Apply saved theme before first paint (default dark) -->
+    <script>
+      try {
+        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark')
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

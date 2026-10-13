@@ -1,0 +1,126 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/bricolage-grotesque";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------- Design tokens ----------
+   One accent (mango amber). Dark is default; `.dark` is set on <html>.
+   Glow strengths are separate variables so dark = strong, light = soft. */
+:root {
+  --background: #f6f7fb;
+  --foreground: #0f1729;
+  --card: #ffffff;
+  --card-foreground: #0f1729;
+  --popover: #ffffff;
+  --popover-foreground: #0f1729;
+  --primary: #b45309;
+  --primary-foreground: #ffffff;
+  --secondary: #eceff6;
+  --secondary-foreground: #0f1729;
+  --muted: #eceff6;
+  --muted-foreground: #4b5670;
+  --accent: #fdf0d8;
+  --accent-foreground: #7c3a06;
+  --destructive: #dc2626;
+  --border: #dde2ee;
+  --input: #dde2ee;
+  --ring: #b45309;
+  --radius: 0.9rem;
+
+  --glow: 180 83 9;          /* rgb triplet of accent, used in rgba() */
+  --glow-strength: 0.16;
+  --spot-strength: 0.10;
+  --grid-line: rgba(15, 23, 41, 0.07);
+}
+
+.dark {
+  --background: #0a1020;
+  --foreground: #e8eef8;
+  --card: #111a2e;
+  --card-foreground: #e8eef8;
+  --popover: #111a2e;
+  --popover-foreground: #e8eef8;
+  --primary: #ffb224;
+  --primary-foreground: #1a1100;
+  --secondary: #17223a;
+  --secondary-foreground: #e8eef8;
+  --muted: #17223a;
+  --muted-foreground: #9aa8c4;
+  --accent: #1d2740;
+  --accent-foreground: #ffd27a;
+  --destructive: #f87171;
+  --border: #22304d;
+  --input: #22304d;
+  --ring: #ffb224;
+
+  --glow: 255 178 36;
+  --glow-strength: 0.45;
+  --spot-strength: 0.20;
+  --grid-line: rgba(232, 238, 248, 0.06);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Geist Variable", ui-sans-serif, sans-serif;
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
+}
+
+/* Dot grid that lights up near the cursor (see CursorGlow). */
+.bg-grid {
+  background-image: radial-gradient(circle, var(--grid-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.bg-grid-lit {
+  background-image: radial-gradient(circle, rgb(var(--glow) / 0.9) 1px, transparent 1.5px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(260px circle at var(--mx, -999px) var(--my, -999px), #000, transparent 70%);
+  mask-image: radial-gradient(260px circle at var(--mx, -999px) var(--my, -999px), #000, transparent 70%);
+}
+
+/* Aurora blobs (hero). Slow drift; paused for reduced motion. */
+@keyframes drift-a { 0%,100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(8%, 10%, 0) scale(1.15); } }
+@keyframes drift-b { 0%,100% { transform: translate3d(0,0,0) scale(1.1); } 50% { transform: translate3d(-10%, -6%, 0) scale(0.95); } }
+.aurora-a { animation: drift-a 18s ease-in-out infinite; }
+.aurora-b { animation: drift-b 22s ease-in-out infinite; }
+
+/* Glow on active/primary elements */
+.glow-primary { box-shadow: 0 0 24px -4px rgb(var(--glow) / var(--glow-strength)); }
+.glow-icon { filter: drop-shadow(0 0 6px rgb(var(--glow) / calc(var(--glow-strength) * 0.8))); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .aurora-a, .aurora-b { animation: none; }
+}
